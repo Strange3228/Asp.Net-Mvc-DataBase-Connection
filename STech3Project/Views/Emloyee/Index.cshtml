@@ -28,7 +28,7 @@
     <script>
         var Popup, dataTable;
         $(document).ready(function () {
-            $("#employeeTable").DataTable({
+            dataTable = $("#employeeTable").DataTable({
                 "ajax": {
                     "url": "/Emloyee/GetData",
                     "type": "GET",
@@ -63,6 +63,21 @@
                         }
                     });
                 });
+        }
+
+        function SubmitForm(form) {
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: $(form).serialize(),
+                succes: function (data) {
+                    if (data.succes) {
+                        Popup.dialog('close');
+                        dataTable.ajax.reload();
+                    }
+                }
+            });
+            return false;
         }
 
     </script>
