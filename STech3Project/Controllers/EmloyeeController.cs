@@ -59,6 +59,16 @@ namespace STech3Project.Controllers
             }
         } 
 
-
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            using (DBModel db = new DBModel())
+            {
+                Employee emp = db.Employee.Where(x => x.EmployeeID == id).FirstOrDefault<Employee>();
+                db.Employee.Remove(emp);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Deleted Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
