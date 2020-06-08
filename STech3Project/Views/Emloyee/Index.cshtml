@@ -63,20 +63,23 @@
                         }
                     });
                 });
-        }
+        };
 
         function SubmitForm(form) {
-            $.ajax({
-                type: "POST",
-                url: form.action,
-                data: $(form).serialize(),
-                succes: function (data) {
-                    if (data.succes) {
-                        Popup.dialog('close');
-                        dataTable.ajax.reload();
+            $.validator.unobtrusive.parse(form);
+            if ($(form).valid()) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    success: function (data) {
+                        if (data.success) {
+                            Popup.dialog('close');
+                            dataTable.ajax.reload();
+                        }
                     }
-                }
-            });
+                });
+            }
             return false;
         }
 
