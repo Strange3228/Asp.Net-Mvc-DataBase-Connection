@@ -14,6 +14,7 @@
             <th>Office</th>
             <th>Age</th>
             <th>Salary</th>
+            <th></th>
         </tr>
     </thead>
 </table>
@@ -39,7 +40,15 @@
                     { "data": "Position" },
                     { "data": "Office" },
                     { "data": "Age" },
-                    { "data": "Salary" }
+                    { "data": "Salary" },
+                    {
+                        "data": "EmployeeID", "render": function (data) {
+                            return "<a class='btn btn-light btn-sm' onclick=PopupForm('@Url.Action("AddOrEdit","Emloyee")/" + data + "')><i class='fa fa-pencil'></i> Edit</a> <a class='btn btn-danger btn-sm' style='margin-left:5px'><i class='fa fa-trash'</i> Delete</a>"
+                        },
+                        "orderable": false,
+                        "searchable" : false,
+                        "width":"150px"
+                    }
                 ],
                 "language": {
                     "emptyTable": "No data found, please add something by clicking on the button <b>Add New</b>"
@@ -76,6 +85,11 @@
                         if (data.success) {
                             Popup.dialog('close');
                             dataTable.ajax.reload();
+
+                            $.notify(data.message, {
+                                globalPosition: "top center",
+                                className : "success"
+                            })
                         }
                     }
                 });
